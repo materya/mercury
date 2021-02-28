@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  dev:
+    container_name: mercury_dev
+    build: .
+    volumes:
+      - .:/workspace
+    tty: true
+    stdin_open: true

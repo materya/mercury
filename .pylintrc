@@ -1,0 +1,22 @@
+[MASTER]
+ignore=test
+extension-pkg-whitelist=numpy,talib
+disable=
+    fixme,
+    too-few-public-methods
+load-plugins=
+    pylint.extensions.docparams,
+    pylint.extensions.docstyle,
+    pylint.extensions.mccabe,
+    pylint_quotes
+max-args=8
+
+# PLUGINS
+
+# pylint_quotes
+string-quote=double-avoid-escape
+triple-quote=double
+docstring-quote=double
+
+# pylint.extensions.mccabe
+max-complexity=6

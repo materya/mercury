@@ -1,0 +1,37 @@
+# Exclude All
+**
+
+# Explicit includes
+!.github/
+!.github/**
+!.vscode/
+!.vscode/**
+!doc/
+!doc/**
+!samples/
+!samples/**
+!src/
+!src/**
+!test/
+!test/**
+!.dockerignore
+!.editorconfig
+!.env.defaults
+!.gitattributes
+!.gitignore
+!.pylintrc
+!CHANGELOG.md
+!Dockerfile
+!LICENSE
+!Makefile
+!README.md
+!conftest.py
+!docker-compose.yml
+!setup.cfg
+!setup.py
+
+# Artifacts
+.DS_Store
+*.egg-info
+*.pyc
+__pycache__

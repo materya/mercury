@@ -1,0 +1,16 @@
+# Exclude All
+**
+
+# Explicit includes
+!.vscode
+!.vscode/**
+!src
+!src/**
+!CHANGELOG.md
+!Makefile
+!LICENSE
+!README.md
+!.pylintrc
+!conftest.py
+!setup.cfg
+!setup.py
