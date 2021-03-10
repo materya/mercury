@@ -2,7 +2,7 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""Platinum Core module."""
+"""Mercury Core module."""
 
 from __future__ import annotations
 
