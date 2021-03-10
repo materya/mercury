@@ -11,19 +11,19 @@ Provide:
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "Quandl",
+    "DataSource",
 ]
 
 from datetime import datetime
 from typing import Dict
 
 from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource
+from mercury.lib import DataSource as AbcDataSource
 
 import quandl
 
 
-class Quandl(DataSource):
+class DataSource(AbcDataSource):
     """quandl.com datasource provider.
 
     Attributes:

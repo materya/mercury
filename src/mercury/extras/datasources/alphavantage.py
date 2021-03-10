@@ -11,7 +11,7 @@ Provide:
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "AlphaVantage",
+    "DataSource",
 ]
 
 from datetime import datetime
@@ -20,10 +20,10 @@ from typing import Dict
 from alpha_vantage.timeseries import TimeSeries as AVTimeSeries
 
 from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource
+from mercury.lib import DataSource as AbcDataSource
 
 
-class AlphaVantage(DataSource):
+class DataSource(AbcDataSource):
     """alphavantage.com datasource provider.
 
     Load data from website alphavantage.

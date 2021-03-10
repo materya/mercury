@@ -57,7 +57,7 @@ See [Samples](samples)
 - Oanda
 - XAPI
 
-#### Datasources
+#### DataSources
 
 - Alphavantage
 - CSV

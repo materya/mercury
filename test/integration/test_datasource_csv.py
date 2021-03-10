@@ -11,7 +11,7 @@ from os.path import dirname, join
 
 from mercury import TimeFrame, TimeSeries
 
-from mercury.extras.datasources import CSV
+from mercury.extras.datasources.csv import DataSource
 
 from pandas import DataFrame
 
@@ -36,36 +36,36 @@ TIMEFRAME = TimeFrame.H1
 class TestInstanciation():
     def test_invalid_file(self):
         with pytest.raises(FileNotFoundError):
-            assert CSV("./unknown/location/file.csv", COLSMAP, INDEX,
-                       INSTRUMENT, TIMEFRAME)
+            assert DataSource("./unknown/location/file.csv", COLSMAP, INDEX,
+                              INSTRUMENT, TIMEFRAME)
 
     def test_invalid_index(self):
         bad_index = "foo"
         with pytest.raises(ValueError) as error:
-            assert CSV(FILE, COLSMAP, bad_index, INSTRUMENT, TIMEFRAME)
+            assert DataSource(FILE, COLSMAP, bad_index, INSTRUMENT, TIMEFRAME)
         message = str(error.value)
         assert message == f"Index column '{bad_index}' does not exist"
 
     def test_not_datetime_index(self):
         bad_index = "Volume"
         with pytest.raises(ValueError) as error:
-            assert CSV(FILE, COLSMAP, bad_index, INSTRUMENT, TIMEFRAME)
+            assert DataSource(FILE, COLSMAP, bad_index, INSTRUMENT, TIMEFRAME)
         message = str(error.value)
         assert message == f"'{bad_index}' column is not a valid datetime"
 
     def test_valid_instanciation(self):
-        assert CSV(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
+        assert DataSource(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
 
 
 class TestColsmapProperty():
     def test_value(self):
-        ds = CSV(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
+        ds = DataSource(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
         assert ds.colsmap is COLSMAP
 
 
 class TestGetMethod():
     def test_get_successful(self):
-        ds = CSV(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
+        ds = DataSource(FILE, COLSMAP, INDEX, INSTRUMENT, TIMEFRAME)
         ts = ds.get_timeseries()
         assert isinstance(ts, TimeSeries)
         assert ts.instrument is INSTRUMENT

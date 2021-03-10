@@ -11,7 +11,7 @@ from datetime import datetime
 
 from mercury import TimeFrame, TimeSeries
 
-from mercury.extras.datasources import AlphaVantage
+from mercury.extras.datasources.alphavantage import DataSource
 
 from pandas import DataFrame
 
@@ -23,7 +23,7 @@ API_KEY = 'TEST'
 
 @pytest.fixture
 def datasource():
-    return AlphaVantage(API_KEY)
+    return DataSource(API_KEY)
 
 
 class TestInstanciation():

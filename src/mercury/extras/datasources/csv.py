@@ -15,20 +15,20 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "CSV",
+    "DataSource",
 ]
 
 
 from typing import Dict
 
 from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource
+from mercury.lib import DataSource as AbcDataSource
 
 import pandas as pd
 from pandas.core.indexes.datetimes import DatetimeIndex
 
 
-class CSV(DataSource):
+class DataSource(AbcDataSource):
     """Simple CSV datasource provider.
 
     Load data from a .csv file.
