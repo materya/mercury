@@ -9,7 +9,7 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "Oanda",
+    "Broker",
 ]
 
 
@@ -17,9 +17,10 @@ from datetime import datetime
 from functools import reduce
 from typing import List
 
-from mercury import (Account, AccountType, Broker, CurrencyCode, OrderAction,
+from mercury import (Account, AccountType, CurrencyCode, OrderAction,
                      Position, PositionStatus, PriceType,
                      TimeFrame, TimeSeries)
+from mercury import Broker as AbcBroker
 from mercury.lib import Client
 
 from oandapyV20 import API
@@ -28,7 +29,7 @@ from oandapyV20.endpoints import accounts, instruments
 import pandas as pd
 
 
-class Oanda(Broker):
+class Broker(AbcBroker):
     """Oanda Broker."""
     def __init__(self, *, account_id: str, login: str, password: str,
                  api_key: str, is_paper: bool = False, **kwargs) -> None:
@@ -87,7 +88,7 @@ class Oanda(Broker):
                           dataframe=pd.DataFrame(candles))
 
     def _api_get_positions(self, *args,
-                           status: PositionStatus = None) -> List(Position):
+                           status: PositionStatus = None) -> List[Position]:
         return None
 
     def _api_get_market_price(self, instrument: str,

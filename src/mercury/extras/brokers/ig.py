@@ -9,7 +9,7 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "IG",
+    "Broker",
 ]
 
 
@@ -23,10 +23,11 @@ from typing import List
 #                      Position, PositionStatus, PositionType, PriceType,
 #                      TimeFrame, TimeSeries)
 # from mercury.lib import Client, DataSource
-from mercury import (Account, AccountType, Broker, CurrencyCode,
+from mercury import (Account, AccountType, CurrencyCode,
                      Order, OrderAction,
                      Position, PositionStatus, PriceType,
                      TimeFrame, TimeSeries)
+from mercury import Broker as AbcBroker
 from mercury.lib import Client
 
 import pandas as pd
@@ -70,25 +71,25 @@ def reduce_candles(candles) -> pd.DataFrame:
     return pd.DataFrame(data).set_index("date")
 
 
-class IGClientRequestError(Exception):
-    """Raised when IG Client returns a functional error."""
+class IgClientRequestError(Exception):
+    """Raised when Ig Client returns a functional error."""
     pass
 
 
-class IGAccountNotFoundError(Exception):
-    """Raised when the account_id provided does not exist on IG platform."""
+class IgAccountNotFoundError(Exception):
+    """Raised when the account_id provided does not exist on Ig platform."""
     pass
 
 
-class IGClient(Client):
-    """IG Client."""
+class IgClient(Client):
+    """Ig Client."""
     def __init__(self, url: str, api_key: str) -> None:
         session = requests.Session()
         session.headers = {
             "Content-Type": "application/json; charset=UTF-8",
             "Accept": "application/json; charset=UTF-8",
             "VERSION": "2",
-            "X-IG-API-KEY": api_key,
+            "X-Ig-API-KEY": api_key,
         }
         self.url = url
         self.session = session
@@ -122,8 +123,8 @@ class IGClient(Client):
         return data
 
 
-class IG(Broker):
-    """IG Broker."""
+class Broker(AbcBroker):
+    """Ig Broker."""
     def __init__(self, *, account_id: str, login: str, password: str,
                  api_key: str, is_paper: bool = False, **kwargs) -> None:
         """Class Initializer."""
@@ -133,7 +134,7 @@ class IG(Broker):
         self._password = password
         self._oauth = {}
 
-        super().__init__("IG", account_id)
+        super().__init__("Ig", account_id)
 
     #
     # BROKER METHODS
@@ -144,7 +145,7 @@ class IG(Broker):
         server = "demo-api.ig.com" if self.is_paper else "api.ig.com"
         url = f"https://{server}/gateway/deal"
 
-        return IGClient(url, self._api_key)
+        return IgClient(url, self._api_key)
 
     def _api_fees(self) -> float:
         return 0.0
@@ -166,7 +167,7 @@ class IG(Broker):
                            if account["accountId"] == account_id)
         except StopIteration:
             # self.__logger.error(f"unable to find account {account_id}")
-            raise IGAccountNotFoundError(f"account {account_id} not found") \
+            raise IgAccountNotFoundError(f"account {account_id} not found") \
                 from None
         return Account(currency=account["currency"],
                        balance=account["balance"]["available"],

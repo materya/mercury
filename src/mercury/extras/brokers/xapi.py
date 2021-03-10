@@ -9,7 +9,7 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "XAPI",
+    "Broker",
 ]
 
 
@@ -20,10 +20,11 @@ from enum import Enum
 from functools import reduce
 from typing import List
 
-from mercury import (Account, AccountType, Broker, CurrencyCode,
+from mercury import (Account, AccountType, CurrencyCode,
                      Order, OrderAction, OrderType,
                      Position, PositionStatus, PositionType, PriceType,
                      TimeFrame, TimeSeries)
+from mercury import Broker as AbcBroker
 from mercury.lib import Client
 from mercury.lib.connectors import WebSocket
 from mercury.lib.exceptions import NotValidPositionTypeError
@@ -76,12 +77,12 @@ def reduce_candles(candles) -> pd.DataFrame:
 WEBSOCKET_SERVER = "ws.xtb.com"
 
 
-class XAPIClientRequestError(Exception):
+class XapiClientRequestError(Exception):
     """Raised when XAPI Client returns a functional error."""
     pass
 
 
-class XAPIClient(Client):
+class XapiClient(Client):
     """XAPI Client."""
     def __init__(self, websocket: WebSocket) -> None:
         self.ws = websocket
@@ -99,7 +100,7 @@ class XAPIClient(Client):
             code = data["errorCode"]
             error = data["errorDescr"]
             self.__logger.error(f"request error {code}: {error}")
-            raise XAPIClientRequestError(error)
+            raise XapiClientRequestError(error)
         else:
             self.__logger.debug(f"request response {data}")
 
@@ -107,7 +108,7 @@ class XAPIClient(Client):
             else data["returnData"]
 
 
-class XAPI(Broker):
+class Broker(AbcBroker):
     """XAPI Broker."""
     def __init__(self, *, account_id: str, login: str, password: str,
                  api_key: str, is_paper: bool = False, **kwargs) -> None:
@@ -117,7 +118,7 @@ class XAPI(Broker):
         self.login = login
         self.password = password
 
-        super().__init__("XAPI", account_id)
+        super().__init__("Xapi", account_id)
 
     #
     # BROKER METHODS
@@ -136,7 +137,7 @@ class XAPI(Broker):
         )
         ws = WebSocket(websocket_url)
 
-        return XAPIClient(ws)
+        return XapiClient(ws)
 
     def _api_fees(self) -> float:
         return 0.0
@@ -273,7 +274,7 @@ class XAPI(Broker):
         return data["order"]
 
     def _api_get_positions(self, *args,
-                           status: PositionStatus = None) -> List(Position):
+                           status: PositionStatus = None) -> List[Position]:
         command = {
             "command": "getTrades",
             "arguments": {
@@ -287,7 +288,7 @@ class XAPI(Broker):
 
         return positions
 
-    # def get_orders(self, *args) -> Union[List(Position), None]:
+    # def get_orders(self, *args) -> Union[List[Position], None]:
     #     command = {
     #         "command": "getTradesHistory",
     #         "arguments": {
