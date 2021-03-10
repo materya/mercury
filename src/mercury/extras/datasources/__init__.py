@@ -2,7 +2,7 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""Mercury DataSources Extras Module."""
+"""Mercury Datasources Extras Module."""
 
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"

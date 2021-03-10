@@ -1,9 +1,9 @@
 import pytest
 
-from mercury.lib import DataStore
+from mercury.lib import Datastore
 
 
-class TestDataStore():
+class TestDatastore():
     pass
 
     # no direct invocation

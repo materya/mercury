@@ -29,7 +29,7 @@ from typing import List, TypeVar
 from . import Account
 from .order import Order, OrderAction
 from .position import Position, PositionStatus, PositionType
-from .timeseries import TimeFrame, TimeSeries
+from .timeseries import Timeframe, Timeseries
 from ..lib import BaseMetaClass, Client
 from ..lib.exceptions import ConnectionLostError
 
@@ -114,9 +114,9 @@ class Broker(metaclass=BaseMetaClass):
         """Implement a translator for a raw position from the broker API."""
 
     @abstractmethod
-    def _api_get_candles(self, instrument: str, timeframe: TimeFrame, *,
+    def _api_get_candles(self, instrument: str, timeframe: Timeframe, *,
                          start_date: datetime, end_date: datetime = None,
-                         **kwargs) -> TimeSeries:
+                         **kwargs) -> Timeseries:
         """Implement the broker's method to get instrument candles values."""
 
     @abstractmethod
@@ -195,7 +195,7 @@ class Broker(metaclass=BaseMetaClass):
             return self.__client.request(payload, **opts)
 
     def get_last_candle(self, instrument: str,
-                        timeframe: TimeFrame) -> TimeSeries:
+                        timeframe: Timeframe) -> Timeseries:
         """Return the last available candle.
 
         This method uses the internal abstract method `_api_get_candles`

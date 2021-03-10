@@ -2,10 +2,10 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""CSV DataSource Module.
+"""CSV Datasource Module.
 
 Provide:
-    - CSV DataSource Class
+    - CSV Datasource Class
 """
 
 
@@ -15,20 +15,20 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "DataSource",
+    "Datasource",
 ]
 
 
 from typing import Dict
 
-from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource as AbcDataSource
+from mercury import Timeframe, Timeseries
+from mercury.lib import Datasource as AbcDatasource
 
 import pandas as pd
 from pandas.core.indexes.datetimes import DatetimeIndex
 
 
-class DataSource(AbcDataSource):
+class Datasource(AbcDatasource):
     """Simple CSV datasource provider.
 
     Load data from a .csv file.
@@ -37,11 +37,11 @@ class DataSource(AbcDataSource):
         file (str): csv file location.
         colsmap (dict): dict mapping of columns name.
         instrument (str): instrument codename reference.
-        timeframe (TimeFrame): data timeframe.
+        timeframe (Timeframe): data timeframe.
 
     Usage::
 
-        >>> from Mercury import TimeFrame
+        >>> from Mercury import Timeframe
         >>> from Mercury.contrib.datasources import CSV
         >>> colsmap = {
             "Date Time": "date",
@@ -52,11 +52,11 @@ class DataSource(AbcDataSource):
             "Volume": "volume",
         }
         >>> datasource = CSV('./some/file.csv', colsmap, "Date Time",
-        "EURUSD", TimeFrame.H1)
+        "EURUSD", Timeframe.H1)
         >>> dataframe = datasource.get_source()
     """
     def __init__(self, filepath: str, colsmap: Dict[str, str],
-                 index: str, instrument: str, timeframe: TimeFrame) -> None:
+                 index: str, instrument: str, timeframe: Timeframe) -> None:
         """Class initializater.
 
         Args:
@@ -65,7 +65,7 @@ class DataSource(AbcDataSource):
                 convention uses by the library.
             index: (not mapped) name of the column to use as index.
             instrument (str): instrument codename reference.
-            timeframe (TimeFrame): data timeframe.
+            timeframe (Timeframe): data timeframe.
         """
         self.file = filepath
         self._colsmap = colsmap
@@ -101,7 +101,7 @@ class DataSource(AbcDataSource):
         """
         return self._colsmap
 
-    def get_timeseries(self) -> TimeSeries:
+    def get_timeseries(self) -> Timeseries:
         """Retrieve a given timeseries from the datasource.
 
         Args:
@@ -111,9 +111,9 @@ class DataSource(AbcDataSource):
             timeframe: target timeframe.
 
         Returns:
-            An Mercury TimeSeries.
+            An Mercury Timeseries.
 
         Raises:
             IndexError: The requested time range cannot be satisfied.
         """
-        return TimeSeries(self.instrument, self.timeframe, self.data)
+        return Timeseries(self.instrument, self.timeframe, self.data)

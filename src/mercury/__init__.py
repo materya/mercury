@@ -25,8 +25,8 @@ from .core import (
     PositionType,
     PriceType,
     Strategy,
-    TimeFrame,
-    TimeSeries,
+    Timeframe,
+    Timeseries,
 )
 
 __revision__ = "$Id$"
@@ -54,6 +54,6 @@ __all__ = [
     "PositionType",
     "PriceType",
     "Strategy",
-    "TimeFrame",
-    "TimeSeries",
+    "Timeframe",
+    "Timeseries",
 ]

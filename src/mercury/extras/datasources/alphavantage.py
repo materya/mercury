@@ -2,28 +2,28 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""AlphaVantage DataSource Module.
+"""AlphaVantage Datasource Module.
 
 Provide:
-    - AlphaVantage DataSource Class
+    - AlphaVantage Datasource Class
 """
 
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "DataSource",
+    "Datasource",
 ]
 
 from datetime import datetime
 from typing import Dict
 
-from alpha_vantage.timeseries import TimeSeries as AVTimeSeries
+from alpha_vantage.timeseries import TimeSeries as AvTimeseries
 
-from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource as AbcDataSource
+from mercury import Timeframe, Timeseries
+from mercury.lib import Datasource as AbcDatasource
 
 
-class DataSource(AbcDataSource):
+class Datasource(AbcDatasource):
     """alphavantage.com datasource provider.
 
     Load data from website alphavantage.
@@ -39,7 +39,7 @@ class DataSource(AbcDataSource):
                 from_date=datetime(2019, 12, 1, 9, 00, 00),
                 to_date=datetime(2019, 12, 15, 23, 00, 00),
                 instrument="MSFT",
-                timeframe=TimeFrame.M5,
+                timeframe=Timeframe.M5,
             )
     """
     def __init__(self, api_key: str) -> None:
@@ -49,7 +49,7 @@ class DataSource(AbcDataSource):
             api_key: alphavantage api key
         """
         self.api_key = api_key
-        self.ts = AVTimeSeries(key=api_key, output_format="pandas",
+        self.ts = AvTimeseries(key=api_key, output_format="pandas",
                                indexing_type="date")
 
     @property
@@ -71,7 +71,7 @@ class DataSource(AbcDataSource):
         }
 
     def get_timeseries(self, from_date: datetime, to_date: datetime,
-                       instrument: str, timeframe: TimeFrame) -> TimeSeries:
+                       instrument: str, timeframe: Timeframe) -> Timeseries:
         """Retrieve a given timeseries from the datasource.
 
         Args:
@@ -81,12 +81,12 @@ class DataSource(AbcDataSource):
             timeframe: target timeframe.
 
         Returns:
-            An Mercury TimeSeries.
+            An Mercury Timeseries.
 
         Raises:
             IndexError: The requested time range cannot be satisfied.
         """
-        if timeframe is TimeFrame.H4:
+        if timeframe is Timeframe.H4:
             raise ValueError("H4 interval not supported")
 
         interval = int(timeframe.value / 60)
@@ -94,12 +94,12 @@ class DataSource(AbcDataSource):
             data, meta_data = self.ts.get_intraday(symbol=instrument,
                                                    interval=f"{interval}min",
                                                    outputsize="full")
-        if timeframe is TimeFrame.D1:
+        if timeframe is Timeframe.D1:
             data, meta_data = self.ts.get_daily_adjusted(symbol=instrument,
                                                          outputsize="full")
-        if timeframe is TimeFrame.W1:
+        if timeframe is Timeframe.W1:
             data, meta_data = self.ts.get_weekly_adjusted(symbol=instrument)
-        if timeframe is TimeFrame.MN:
+        if timeframe is Timeframe.MN:
             data, meta_data = self.ts.get_monthly_adjusted(symbol=instrument)
 
-        return TimeSeries(instrument, timeframe, data)
+        return Timeseries(instrument, timeframe, data)

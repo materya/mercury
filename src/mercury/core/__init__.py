@@ -25,8 +25,8 @@ __all__ = [
     "PositionType",
     "PriceType",
     "Strategy",
-    "TimeFrame",
-    "TimeSeries",
+    "Timeframe",
+    "Timeseries",
 ]
 
 
@@ -36,4 +36,4 @@ from .engine import Engine
 from .order import Order, OrderAction, OrderStatus, OrderType
 from .position import Position, PositionStatus, PositionType
 from .strategy import Indicator, Strategy
-from .timeseries import TimeFrame, TimeSeries
+from .timeseries import Timeframe, Timeseries

@@ -3,7 +3,7 @@ import importlib
 import logging
 from distutils import util
 
-from mercury import Engine, TimeFrame
+from mercury import Engine, Timeframe
 
 
 config = configparser.ConfigParser()
@@ -31,7 +31,7 @@ def main():
 
     engine = Engine(broker=broker, strategy=Strategy)
     engine.start(instrument=broker_config["instrument"],
-                 timeframe=TimeFrame[params["timeframe"]],
+                 timeframe=Timeframe[params["timeframe"]],
                  warmup=int(params["warmup"]))
 
 

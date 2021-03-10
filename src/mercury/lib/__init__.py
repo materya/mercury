@@ -18,8 +18,8 @@ __all__ = [
     "BaseClass",
     "BaseMetaClass",
     "Client",
-    "DataSource",
-    "DataStore",
+    "Datasource",
+    "Datastore",
     "FlexArray",
     "cross",
     "crossover",
@@ -33,8 +33,8 @@ import pandas as pd
 
 from .baseclass import BaseClass, BaseMetaClass
 from .client import Client
-from .datasource import DataSource
-from .datastore import DataStore
+from .datasource import Datasource
+from .datastore import Datastore
 from .flexarray import FlexArray
 
 

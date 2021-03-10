@@ -19,7 +19,7 @@ from typing import List
 
 from mercury import (Account, AccountType, CurrencyCode, OrderAction,
                      Position, PositionStatus, PriceType,
-                     TimeFrame, TimeSeries)
+                     Timeframe, Timeseries)
 from mercury import Broker as AbcBroker
 from mercury.lib import Client
 
@@ -62,9 +62,9 @@ class Broker(AbcBroker):
                                account_type=account_type,
                                margin=float(raw_account["marginRate"]))
 
-    def _api_get_candles(self, instrument: str, timeframe: TimeFrame, *,
+    def _api_get_candles(self, instrument: str, timeframe: Timeframe, *,
                          start_date: datetime, end_date: datetime = None,
-                         **kwargs) -> TimeSeries:
+                         **kwargs) -> Timeseries:
         endpoint = instruments.InstrumentsCandles(instrument=instrument,
                                                   params=kwargs)
         # TODO: make a standard request try/catch class internal method
@@ -83,7 +83,7 @@ class Broker(AbcBroker):
             return candles
         candles = reduce(reduce_candles, data["candles"], init_candles)
 
-        return TimeSeries(instrument=instrument,
+        return Timeseries(instrument=instrument,
                           timeframe=timeframe,
                           dataframe=pd.DataFrame(candles))
 

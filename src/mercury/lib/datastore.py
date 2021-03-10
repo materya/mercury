@@ -1,10 +1,10 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 # Copyright (C) 2019 - 2021 Richard Kemp
 
-"""Mercury DataStore module.
+"""Mercury Datastore module.
 
 Provide:
-    - DataStore superclass
+    - Datastore superclass
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "DataStore",
+    "Datastore",
 ]
 
 
@@ -24,8 +24,8 @@ from pandas import DataFrame
 from .baseclass import BaseMetaClass
 
 
-class DataStore(metaclass=BaseMetaClass):
-    """DataStore interface.
+class Datastore(metaclass=BaseMetaClass):
+    """Datastore interface.
 
     A datastore is a storage dedicated for trading timeseries data,
     usually previously retrieve an stored from a datasource in order

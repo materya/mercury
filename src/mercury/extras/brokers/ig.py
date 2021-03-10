@@ -21,12 +21,12 @@ from typing import List
 # from mercury import (Account, AccountType, Broker, CurrencyCode,
 #                      Order, OrderAction, OrderType,
 #                      Position, PositionStatus, PositionType, PriceType,
-#                      TimeFrame, TimeSeries)
-# from mercury.lib import Client, DataSource
+#                      Timeframe, Timeseries)
+# from mercury.lib import Client, Datasource
 from mercury import (Account, AccountType, CurrencyCode,
                      Order, OrderAction,
                      Position, PositionStatus, PriceType,
-                     TimeFrame, TimeSeries)
+                     Timeframe, Timeseries)
 from mercury import Broker as AbcBroker
 from mercury.lib import Client
 
@@ -36,16 +36,16 @@ import requests
 
 
 TIMEFRAME_MAP = {
-    TimeFrame.S: "SECOND",
-    TimeFrame.M1: "MINUTE",
-    TimeFrame.M5: "MINUTE_5",
-    TimeFrame.M15: "MINUTE_15",
-    TimeFrame.M30: "MINUTE_30",
-    TimeFrame.H1: "HOUR",
-    TimeFrame.H4: "HOUR_4",
-    TimeFrame.D1: "DAY",
-    TimeFrame.W1: "WEEK",
-    TimeFrame.MN: "MONTH",
+    Timeframe.S: "SECOND",
+    Timeframe.M1: "MINUTE",
+    Timeframe.M5: "MINUTE_5",
+    Timeframe.M15: "MINUTE_15",
+    Timeframe.M30: "MINUTE_30",
+    Timeframe.H1: "HOUR",
+    Timeframe.H4: "HOUR_4",
+    Timeframe.D1: "DAY",
+    Timeframe.W1: "WEEK",
+    Timeframe.MN: "MONTH",
 }
 
 
@@ -180,9 +180,9 @@ class Broker(AbcBroker):
     def _render_position(self, raw: dict) -> Position:
         pass
 
-    def _api_get_candles(self, instrument: str, timeframe: TimeFrame, *,
+    def _api_get_candles(self, instrument: str, timeframe: Timeframe, *,
                          start_date: datetime, end_date: datetime = None,
-                         **kwargs) -> TimeSeries:
+                         **kwargs) -> Timeseries:
         path = "prices/{}/{}/{}/{}".format(
             instrument,
             TIMEFRAME_MAP[timeframe],
@@ -193,7 +193,7 @@ class Broker(AbcBroker):
 
         dataframe = reduce_candles(response["prices"])
 
-        return TimeSeries(instrument=instrument,
+        return Timeseries(instrument=instrument,
                           timeframe=timeframe,
                           dataframe=dataframe)
 

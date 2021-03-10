@@ -2,28 +2,28 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""Quandl DataSource Module.
+"""Quandl Datasource Module.
 
 Provide:
-    - Quandl DataSource Class
+    - Quandl Datasource Class
 """
 
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "DataSource",
+    "Datasource",
 ]
 
 from datetime import datetime
 from typing import Dict
 
-from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource as AbcDataSource
+from mercury import Timeframe, Timeseries
+from mercury.lib import Datasource as AbcDatasource
 
 import quandl
 
 
-class DataSource(AbcDataSource):
+class Datasource(AbcDatasource):
     """quandl.com datasource provider.
 
     Attributes:
@@ -37,7 +37,7 @@ class DataSource(AbcDataSource):
                 from_date=datetime(2019, 12, 1, 9, 00, 00),
                 to_date=datetime(2019, 12, 15, 23, 00, 00),
                 instrument="MSFT",
-                timeframe=TimeFrame.M5,
+                timeframe=Timeframe.M5,
             )
     """
     def __init__(self, api_key: str) -> None:
@@ -67,7 +67,7 @@ class DataSource(AbcDataSource):
         }
 
     def get_timeseries(self, from_date: datetime, to_date: datetime,
-                       instrument: str, timeframe: TimeFrame) -> TimeSeries:
+                       instrument: str, timeframe: Timeframe) -> Timeseries:
         """Retrieve a given timeseries from the datasource.
 
         Args:
@@ -77,11 +77,11 @@ class DataSource(AbcDataSource):
             timeframe: target timeframe.
 
         Returns:
-            An Mercury TimeSeries.
+            An Mercury Timeseries.
 
         Raises:
             IndexError: The requested time range cannot be satisfied.
         """
         data = quandl.get(instrument)
 
-        return TimeSeries(instrument, timeframe, data)
+        return Timeseries(instrument, timeframe, data)

@@ -5,7 +5,7 @@ from mercury.backtest import Simulator
 
 # bt = Simulator(StrategySMACrossOver, 'EURUSD', datastore=, datasource=csv_ds)
 
-# results = bt.run(from='2019-01-01', to='2020-01-01', timeframe=TimeFrame.H1)
+# results = bt.run(from='2019-01-01', to='2020-01-01', timeframe=Timeframe.H1)
 # results.print()
 # results.plot()
 # results.export(ExportType.PDF)

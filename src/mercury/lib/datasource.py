@@ -1,10 +1,10 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 # Copyright (C) 2019 - 2021 Richard Kemp
 
-"""Mercury DataSource module.
+"""Mercury Datasource module.
 
 Provide:
-    - DataSource Interface
+    - Datasource Interface
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from __future__ import annotations
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "DataSource",
+    "Datasource",
 ]
 
 
@@ -22,11 +22,11 @@ from datetime import datetime
 from typing import Dict
 
 
-from ..core.timeseries import TimeFrame, TimeSeries
+from ..core.timeseries import Timeframe, Timeseries
 
 
-class DataSource(object, metaclass=ABCMeta):
-    """DataSource Interface.
+class Datasource(object, metaclass=ABCMeta):
+    """Datasource Interface.
 
     A datasource is a way to retrieve fresh trading data (typically OHLC) from
     a specific source.
@@ -36,7 +36,7 @@ class DataSource(object, metaclass=ABCMeta):
         """Columns mapping dictionary.
 
         Provide a mapping to translate raw time series columns name
-        to Mercury DataSource naming convention.
+        to Mercury Datasource naming convention.
 
         Expect standard names like "open", "high", "low", "close", "adj_close"
         and "volume".
@@ -44,7 +44,7 @@ class DataSource(object, metaclass=ABCMeta):
 
     @abstractmethod
     def get_timeseries(self, from_date: datetime, to_date: datetime,
-                       instrument: str, timeframe: TimeFrame) -> TimeSeries:
+                       instrument: str, timeframe: Timeframe) -> Timeseries:
         """Retrieve a given timeseries from the datasource.
 
         Args:
@@ -54,7 +54,7 @@ class DataSource(object, metaclass=ABCMeta):
             timeframe: target timeframe.
 
         Returns:
-            An Mercury TimeSeries.
+            An Mercury Timeseries.
 
         Raises:
             IndexError: The requested time range cannot be satisfied.

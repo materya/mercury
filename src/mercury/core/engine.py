@@ -20,7 +20,7 @@ from typing import Type
 
 from .broker import Broker
 from .strategy import Strategy
-from .timeseries import TimeFrame
+from .timeseries import Timeframe
 from ..lib import BaseClass
 
 
@@ -75,7 +75,7 @@ class Engine(BaseClass):
 
             time.sleep(1)
 
-    def start(self, *, instrument: str, timeframe: TimeFrame,
+    def start(self, *, instrument: str, timeframe: Timeframe,
               warmup: int = 1) -> None:
         """Start the engine."""
         self.warmup = warmup

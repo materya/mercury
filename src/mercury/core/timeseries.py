@@ -5,15 +5,15 @@
 """Mercury Timeseries Module.
 
 Provide:
-    - TimeFrame Enum
-    - TimeSeries Class
+    - Timeframe Enum
+    - Timeseries Class
 """
 
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "TimeFrame",
-    "TimeSeries",
+    "Timeframe",
+    "Timeseries",
 ]
 
 from enum import Enum
@@ -23,7 +23,7 @@ from pandas import DataFrame
 from ..lib.flexarray import FlexArray
 
 
-class TimeFrame(Enum):
+class Timeframe(Enum):
     """Standard trading timeframes in seconds.
 
     Members:
@@ -53,18 +53,18 @@ class TimeFrame(Enum):
     MN = 43200 * 60
 
 
-class TimeSeries(FlexArray):
-    """TimeSeries Class.
+class Timeseries(FlexArray):
+    """Timeseries Class.
 
     A classic financial timeseries representation, normalized for internal
     library usage.
 
     Attributes:
         instrument (str): name of the instrument data belongs to.
-        timeframe (TimeFrame): data timeframe scale.
+        timeframe (Timeframe): data timeframe scale.
         data (DataFrame): pandas DataFrame representation of data.
     """
-    def __init__(self, instrument: str, timeframe: TimeFrame,
+    def __init__(self, instrument: str, timeframe: Timeframe,
                  dataframe: DataFrame) -> None:
         """Class Initializer.
 

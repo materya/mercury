@@ -13,19 +13,19 @@ __all__ = [
 
 # from .broker import BacktestBroker
 from .. import Strategy
-from ..lib import BaseClass, DataSource, DataStore
+from ..lib import BaseClass, Datasource, Datastore
 
 
 class Simulator(BaseClass):
     """Backtest strategy simulation."""
-    def __init__(self, strategy: Strategy, *, datastore: DataStore,
-                 datasource: DataSource = None, warmup: int = 1) -> None:
+    def __init__(self, strategy: Strategy, *, datastore: Datastore,
+                 datasource: Datasource = None, warmup: int = 1) -> None:
         """Initialize."""
         # some sanity checks
-        if datasource and not isinstance(datasource, DataSource):
-            raise TypeError("`datasource` must be a `DataSource` subclass")
-        if not isinstance(datastore, DataStore):
-            raise TypeError("`datastore` must be a `DataStore` subclass")
+        if datasource and not isinstance(datasource, Datasource):
+            raise TypeError("`datasource` must be a `Datasource` subclass")
+        if not isinstance(datastore, Datastore):
+            raise TypeError("`datastore` must be a `Datastore` subclass")
 
         # self.broker = BacktestBroker(account)
         self.strategy = strategy

@@ -9,9 +9,9 @@ __revision__ = "$Id$"
 
 from datetime import datetime
 
-from mercury import TimeFrame, TimeSeries
+from mercury import Timeframe, Timeseries
 
-from mercury.extras.datasources.alphavantage import DataSource
+from mercury.extras.datasources.alphavantage import Datasource
 
 from pandas import DataFrame
 
@@ -23,7 +23,7 @@ API_KEY = 'TEST'
 
 @pytest.fixture
 def datasource():
-    return DataSource(API_KEY)
+    return Datasource(API_KEY)
 
 
 class TestInstanciation():
@@ -39,20 +39,20 @@ class TestGetMethod():
                 from_date=datetime(2019, 12, 1, 9, 00, 00),
                 to_date=datetime(2017, 12, 15, 23, 00, 00),
                 instrument="MSFT",
-                timeframe=TimeFrame.H4)
+                timeframe=Timeframe.H4)
         message = str(error.value)
         assert message == "H4 interval not supported"
 
     @pytest.mark.online
     def test_intraday_data(self, datasource):
         instrument = "MSFT"
-        timeframe = TimeFrame.M5
+        timeframe = Timeframe.M5
         ts = datasource.get_timeseries(
             from_date=datetime(2019, 12, 1, 9, 00, 00),
             to_date=datetime(2019, 12, 15, 23, 00, 00),
             instrument=instrument,
             timeframe=timeframe)
-        assert isinstance(ts, TimeSeries)
+        assert isinstance(ts, Timeseries)
         assert ts.instrument is instrument
         assert ts.timeframe is timeframe
         assert isinstance(ts.data, DataFrame)
@@ -60,13 +60,13 @@ class TestGetMethod():
     @pytest.mark.online
     def test_daily_data(self, datasource):
         instrument = "MSFT"
-        timeframe = TimeFrame.D1
+        timeframe = Timeframe.D1
         ts = datasource.get_timeseries(
             from_date=datetime(2019, 12, 1, 9, 00, 00),
             to_date=datetime(2019, 12, 15, 23, 00, 00),
             instrument=instrument,
             timeframe=timeframe)
-        assert isinstance(ts, TimeSeries)
+        assert isinstance(ts, Timeseries)
         assert ts.instrument is instrument
         assert ts.timeframe is timeframe
         assert isinstance(ts.data, DataFrame)
@@ -74,13 +74,13 @@ class TestGetMethod():
     @pytest.mark.online
     def test_weekly_data(self, datasource):
         instrument = "MSFT"
-        timeframe = TimeFrame.W1
+        timeframe = Timeframe.W1
         ts = datasource.get_timeseries(
             from_date=datetime(2019, 12, 1, 9, 00, 00),
             to_date=datetime(2019, 12, 15, 23, 00, 00),
             instrument=instrument,
             timeframe=timeframe)
-        assert isinstance(ts, TimeSeries)
+        assert isinstance(ts, Timeseries)
         assert ts.instrument is instrument
         assert ts.timeframe is timeframe
         assert isinstance(ts.data, DataFrame)
@@ -88,13 +88,13 @@ class TestGetMethod():
     @pytest.mark.online
     def test_monthly_data(self, datasource):
         instrument = "MSFT"
-        timeframe = TimeFrame.MN
+        timeframe = Timeframe.MN
         ts = datasource.get_timeseries(
             from_date=datetime(2019, 12, 1, 9, 00, 00),
             to_date=datetime(2019, 12, 15, 23, 00, 00),
             instrument=instrument,
             timeframe=timeframe)
-        assert isinstance(ts, TimeSeries)
+        assert isinstance(ts, Timeseries)
         assert ts.instrument is instrument
         assert ts.timeframe is timeframe
         assert isinstance(ts.data, DataFrame)

@@ -23,7 +23,7 @@ from typing import List
 from mercury import (Account, AccountType, CurrencyCode,
                      Order, OrderAction, OrderType,
                      Position, PositionStatus, PositionType, PriceType,
-                     TimeFrame, TimeSeries)
+                     Timeframe, Timeseries)
 from mercury import Broker as AbcBroker
 from mercury.lib import Client
 from mercury.lib.connectors import WebSocket
@@ -189,9 +189,9 @@ class Broker(AbcBroker):
                         spread=raw["spread"], taxes=raw["taxes"],
                         raw=raw)
 
-    def _api_get_candles(self, instrument: str, timeframe: TimeFrame, *,
+    def _api_get_candles(self, instrument: str, timeframe: Timeframe, *,
                          start_date: datetime, end_date: datetime = None,
-                         **kwargs) -> TimeSeries:
+                         **kwargs) -> Timeseries:
 
         command = {
             "command": "getChartLastRequest",
@@ -207,7 +207,7 @@ class Broker(AbcBroker):
         data = self.request(command)
         dataframe = reduce_candles(data["rateInfos"])
 
-        return TimeSeries(instrument=instrument,
+        return Timeseries(instrument=instrument,
                           timeframe=timeframe,
                           dataframe=dataframe)
 

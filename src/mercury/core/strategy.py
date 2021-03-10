@@ -26,7 +26,7 @@ from typing import Callable, List
 import numpy as np
 
 from ..core.broker import Broker
-from ..core.timeseries import TimeSeries
+from ..core.timeseries import Timeseries
 from ..lib import BaseClass
 
 
@@ -77,7 +77,7 @@ class Indicator(BaseClass):
         """Override __str__."""
         return str(float(self))
 
-    def apply(self, timeseries: TimeSeries) -> None:
+    def apply(self, timeseries: Timeseries) -> None:
         """Run the indicator function against a timeseries and store it."""
         self._data = self._func(timeseries)
 
@@ -111,7 +111,7 @@ class Strategy(metaclass=StrategyMeta):
     `mercury.Strategy.setup` and
     `mercury.Strategy.tick` to define your own strategy.
     """
-    def __init__(self, broker: Broker, timeseries: TimeSeries) -> None:
+    def __init__(self, broker: Broker, timeseries: Timeseries) -> None:
         """Initialize."""
         self._indicators = {}
         self.broker = broker
