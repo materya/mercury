@@ -1,15 +1,13 @@
 #!make
 
+export DOCKER_BUILDKIT = 1
+export COMPOSE_DOCKER_CLI_BUILD = 1
+
 # Command Variables
 D = docker
 DC = docker-compose
 DCFLAGS = --rm dev
 PYTHON = python
-# ifneq (,$(wildcard /.dockerenv))
-# 	PYTHON = python
-# else
-# 	PYTHON = $(DC) run $(DCFLAGS) python
-# endif
 
 build_dir = build
 dist_dir = dist
@@ -28,6 +26,10 @@ clean: distclean
 	@find . -depth -name '__pycache__' -exec rm -rv {} \;
 	@$(PYTHON) setup.py clean
 .PHONY: clean
+
+container:
+	@$(DC) build
+.PHONY: container
 
 dist:
 	@$(PYTHON) setup.py sdist bdist_wheel
@@ -69,7 +71,7 @@ upload-check: dist
 	@$(PYTHON) -m twine check $(dist_dir)/*
 .PHONY: upload-check
 
-upload-test: upload-check 
+upload-test: upload-check
 	@$(PYTHON) -m twine upload --repository testpypi $(dist_dir)/*
 .PHONY: upload-test
 

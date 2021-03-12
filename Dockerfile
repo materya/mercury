@@ -7,12 +7,12 @@ COPY . .
 USER root
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends make git \
+  && apt-get install -y --no-install-recommends make \
   && make install-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_MODULES="\
+ARG PYTHON_MODULES="\
   ipykernel \
 "
 

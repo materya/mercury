@@ -1,0 +1,23 @@
+{
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "docker-compose.yml",
+  ],
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+  ],
+  "initializeCommand": "make container",
+  "name": "Mercury Materya Dev",
+  "remoteEnv": {
+    "DOCKER_BUILDKIT": "1",
+    "COMPOSE_DOCKER_CLI_BUILD": "1",
+  },
+  "service": "dev",
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python",
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspace",
+}

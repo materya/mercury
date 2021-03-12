@@ -1,0 +1,7 @@
+version: '3.7'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
