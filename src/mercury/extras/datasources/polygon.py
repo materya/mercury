@@ -2,23 +2,23 @@
 # $Id$
 # -*- coding: utf-8; py-indent-offset:4 -*-
 
-"""Polygon DataSource Module.
+"""Polygon Datasource Module.
 
 Provide:
-    - Polygon DataSource Class
+    - Polygon Datasource Class
 """
 
 __copyright__ = "Copyright 2019 - 2021 Richard Kemp"
 __revision__ = "$Id$"
 __all__ = [
-    "Polygon",
+    "Datasource",
 ]
 
 from datetime import datetime
 from typing import Dict
 
-from mercury import TimeFrame, TimeSeries
-from mercury.lib import DataSource
+from mercury import Timeframe, Timeseries
+from mercury.lib import Datasource as AbcDataSource
 
 import pandas as pd
 
@@ -26,21 +26,21 @@ from polygon import RESTClient
 
 
 TIMEFRAME_MAP = {
-    TimeFrame.M1: {"multiplier": 1, "timestamp": "minute"},
-    TimeFrame.M5: {"multiplier": 5, "timestamp": "minute"},
-    TimeFrame.M15: {"multiplier": 15, "timestamp": "minute"},
-    TimeFrame.M30: {"multiplier": 30, "timestamp": "minute"},
-    TimeFrame.H1: {"multiplier": 1, "timestamp": "minute"},
-    TimeFrame.H4: {"multiplier": 4, "timestamp": "hour"},
-    TimeFrame.D1: {"multiplier": 1, "timestamp": "day"},
-    TimeFrame.W1: {"multiplier": 1, "timestamp": "week"},
-    TimeFrame.MN: {"multiplier": 1, "timestamp": "month"},
+    Timeframe.M1: {"multiplier": 1, "timestamp": "minute"},
+    Timeframe.M5: {"multiplier": 5, "timestamp": "minute"},
+    Timeframe.M15: {"multiplier": 15, "timestamp": "minute"},
+    Timeframe.M30: {"multiplier": 30, "timestamp": "minute"},
+    Timeframe.H1: {"multiplier": 1, "timestamp": "minute"},
+    Timeframe.H4: {"multiplier": 4, "timestamp": "hour"},
+    Timeframe.D1: {"multiplier": 1, "timestamp": "day"},
+    Timeframe.W1: {"multiplier": 1, "timestamp": "week"},
+    Timeframe.MN: {"multiplier": 1, "timestamp": "month"},
 }
 
 PolygonInstrumentType = ["stock", "crypto", "forex"]
 
 
-class Polygon(DataSource):
+class Datasource(AbcDataSource):
     """polygon.io datasource provider.
 
     Load data from website polygon.
@@ -56,7 +56,7 @@ class Polygon(DataSource):
                 from_date=datetime(2019, 12, 1, 9, 00, 00),
                 to_date=datetime(2019, 12, 15, 23, 00, 00),
                 instrument="MSFT",
-                timeframe=TimeFrame.M5,
+                timeframe=Timeframe.M5,
             )
     """
     def __init__(self, api_key: str,
@@ -89,7 +89,7 @@ class Polygon(DataSource):
         }
 
     def get_timeseries(self, from_date: datetime, to_date: datetime,
-                       instrument: str, timeframe: TimeFrame) -> TimeSeries:
+                       instrument: str, timeframe: Timeframe) -> Timeseries:
         """Retrieve a given timeseries from the datasource.
 
         Args:
@@ -99,12 +99,12 @@ class Polygon(DataSource):
             timeframe: target timeframe.
 
         Returns:
-            An Mercury TimeSeries.
+            An Mercury Timeseries.
 
         Raises:
             IndexError: The requested time range cannot be satisfied.
         """
-        if timeframe is TimeFrame.S:
+        if timeframe is Timeframe.S:
             raise ValueError("S interval not supported")
 
         if self.instrument_type not in PolygonInstrumentType:
@@ -122,4 +122,4 @@ class Polygon(DataSource):
                                                          from_date, to_date)
                 data = pd.DataFrame(resp.results)
 
-        return TimeSeries(instrument, timeframe, data)
+        return Timeseries(instrument, timeframe, data)
