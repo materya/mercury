@@ -56,7 +56,7 @@ class TestGetMethod():
         assert message == "Unsupported Polygon instrument type"
 
     @pytest.mark.online
-    def test_intraday_data(self, datasource):
+    def test_intraday_stock_data(self, datasource):
         instrument = "AAPL"
         timeframe = Timeframe.M5
         ts = datasource.get_timeseries(
@@ -69,44 +69,72 @@ class TestGetMethod():
         assert ts.timeframe is timeframe
         assert isinstance(ts.data, DataFrame)
 
-    # @pytest.mark.online
-    # def test_daily_data(self, datasource):
-    #     instrument = "MSFT"
-    #     timeframe = Timeframe.D1
-    #     ts = datasource.get_timeseries(
-    #         from_date=datetime(2019, 12, 1, 9, 00, 00),
-    #         to_date=datetime(2019, 12, 15, 23, 00, 00),
-    #         instrument=instrument,
-    #         timeframe=timeframe)
-    #     assert isinstance(ts, Timeseries)
-    #     assert ts.instrument is instrument
-    #     assert ts.timeframe is timeframe
-    #     assert isinstance(ts.data, DataFrame)
+    @pytest.mark.online
+    def test_intraday_forex_data(self, datasource):
+        instrument = "C:EURUSD"
+        timeframe = Timeframe.M5
+        ts = datasource.get_timeseries(
+            from_date=datetime(2019, 12, 1, 9, 00, 00),
+            to_date=datetime(2019, 12, 2, 23, 00, 00),
+            instrument=instrument,
+            timeframe=timeframe)
+        assert isinstance(ts, Timeseries)
+        assert ts.instrument is instrument
+        assert ts.timeframe is timeframe
+        assert isinstance(ts.data, DataFrame)
+
+    @pytest.mark.online
+    def test_intraday_crypto_data(self, datasource):
+        instrument = "X:BTCUSD"
+        timeframe = Timeframe.M5
+        ts = datasource.get_timeseries(
+            from_date=datetime(2019, 12, 1, 9, 00, 00),
+            to_date=datetime(2019, 12, 2, 23, 00, 00),
+            instrument=instrument,
+            timeframe=timeframe)
+        assert isinstance(ts, Timeseries)
+        assert ts.instrument is instrument
+        assert ts.timeframe is timeframe
+        assert isinstance(ts.data, DataFrame)
 
     # @pytest.mark.online
-    # def test_weekly_data(self, datasource):
-    #     instrument = "MSFT"
-    #     timeframe = Timeframe.W1
-    #     ts = datasource.get_timeseries(
-    #         from_date=datetime(2019, 12, 1, 9, 00, 00),
-    #         to_date=datetime(2019, 12, 15, 23, 00, 00),
-    #         instrument=instrument,
-    #         timeframe=timeframe)
-    #     assert isinstance(ts, Timeseries)
-    #     assert ts.instrument is instrument
-    #     assert ts.timeframe is timeframe
-    #     assert isinstance(ts.data, DataFrame)
+    def test_daily_data(self, datasource):
+        instrument = "MSFT"
+        timeframe = Timeframe.D1
+        ts = datasource.get_timeseries(
+            from_date=datetime(2019, 12, 1, 9, 00, 00),
+            to_date=datetime(2019, 12, 15, 23, 00, 00),
+            instrument=instrument,
+            timeframe=timeframe)
+        assert isinstance(ts, Timeseries)
+        assert ts.instrument is instrument
+        assert ts.timeframe is timeframe
+        assert isinstance(ts.data, DataFrame)
 
-    # @pytest.mark.online
-    # def test_monthly_data(self, datasource):
-    #     instrument = "MSFT"
-    #     timeframe = Timeframe.MN
-    #     ts = datasource.get_timeseries(
-    #         from_date=datetime(2019, 12, 1, 9, 00, 00),
-    #         to_date=datetime(2019, 12, 15, 23, 00, 00),
-    #         instrument=instrument,
-    #         timeframe=timeframe)
-    #     assert isinstance(ts, Timeseries)
-    #     assert ts.instrument is instrument
-    #     assert ts.timeframe is timeframe
-    #     assert isinstance(ts.data, DataFrame)
+    @pytest.mark.online
+    def test_weekly_data(self, datasource):
+        instrument = "MSFT"
+        timeframe = Timeframe.W1
+        ts = datasource.get_timeseries(
+            from_date=datetime(2019, 12, 1, 9, 00, 00),
+            to_date=datetime(2019, 12, 15, 23, 00, 00),
+            instrument=instrument,
+            timeframe=timeframe)
+        assert isinstance(ts, Timeseries)
+        assert ts.instrument is instrument
+        assert ts.timeframe is timeframe
+        assert isinstance(ts.data, DataFrame)
+
+    @pytest.mark.online
+    def test_monthly_data(self, datasource):
+        instrument = "MSFT"
+        timeframe = Timeframe.MN
+        ts = datasource.get_timeseries(
+            from_date=datetime(2019, 12, 1, 9, 00, 00),
+            to_date=datetime(2019, 12, 15, 23, 00, 00),
+            instrument=instrument,
+            timeframe=timeframe)
+        assert isinstance(ts, Timeseries)
+        assert ts.instrument is instrument
+        assert ts.timeframe is timeframe
+        assert isinstance(ts.data, DataFrame)

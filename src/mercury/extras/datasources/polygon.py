@@ -68,6 +68,10 @@ class Datasource(AbcDataSource):
             instrument_type: the Polygon instrument type [forex, crypto, stock]
         """
         self.api_key = api_key
+
+        if instrument_type not in PolygonInstrumentType:
+            raise ValueError("Unsupported Polygon instrument type")
+
         self.instrument_type = instrument_type
 
     @property
@@ -107,19 +111,15 @@ class Datasource(AbcDataSource):
         if timeframe is Timeframe.S:
             raise ValueError("S interval not supported")
 
-        if self.instrument_type not in PolygonInstrumentType:
-            raise ValueError("Unsupported Polygon instrument type")
-
         multiplier = TIMEFRAME_MAP[timeframe]["multiplier"]
         timestamp = TIMEFRAME_MAP[timeframe]["timestamp"]
         from_date = datetime.strftime(from_date, "%Y-%m-%d")
         to_date = datetime.strftime(to_date, "%Y-%m-%d")
 
-        if self.instrument_type == "stock":
-            with RESTClient(self.api_key) as client:
-                resp = client.stocks_equities_aggregates(instrument,
-                                                         multiplier, timestamp,
-                                                         from_date, to_date)
-                data = pd.DataFrame(resp.results)
+        with RESTClient(self.api_key) as client:
+            resp = client.stocks_equities_aggregates(instrument,
+                                                     multiplier, timestamp,
+                                                     from_date, to_date)
+            data = pd.DataFrame(resp.results)
 
         return Timeseries(instrument, timeframe, data)
