@@ -19,7 +19,6 @@ import pytest
 
 # API_KEY = os.environ['POLYGON_API_KEY']
 # API_KEY = 'TEST'
-API_KEY = '0mEGmDxsPUtn7M8VDEhyYi7D3oQ5OuPh'
 
 
 @pytest.fixture
