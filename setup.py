@@ -23,6 +23,9 @@ extras_packages = {
     "extra_datasource_quandl": [
         "quandl==3.6.1",
     ],
+    "extra_datasource_polygon": [
+        "polygon==0.1.9",
+    ],
     "extra_broker_ig": [
         "requests",
     ],
