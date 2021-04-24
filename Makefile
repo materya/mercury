@@ -16,7 +16,8 @@ name = `$(PYTHON) setup.py --name`
 artifacts = \
 	.coverage \
 	.mypy_cache \
-	.pytest_cache
+	.pytest_cache \
+	src/*.egg-info
 
 all: install
 .PHONY: all

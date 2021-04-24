@@ -17,7 +17,7 @@ from .. import Broker
 # from ..lib import InstrumentCandles
 
 
-class MockBrokerAPI():
+class MockBrokerApi():
     """Mock of a broker API class for backtesting simulation."""
     def __init__(self, token) -> None:
         super().__init__()
